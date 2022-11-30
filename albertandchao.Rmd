@@ -66,6 +66,19 @@ hist(dataset$Administration, col = "skyblue",main = "Administration",xlab = "Adm
 hist(dataset$Marketing.Spend, col = "green", main = "Marketing Spend",xlab = "Marketing Spending")
 hist(dataset$State, col = "coral2",main = "State",xlab = "State")
 ```
+## 3.4.1 Kernel Density Plot
+
+Density curves allow us to quickly see whether or not a graph is left skewed, right skewed, or has no skew. We see there are no features that their density have no skew.
+
+```{r}
+library(ggplot2)
+par(mfrow=c(2,3))
+plot(density(dataset$R.D.Spend))
+plot(density(dataset$Administration))
+plot(density(dataset$Marketing.Spend))
+plot(density(dataset$State))
+plot(density(dataset$Profit))
+```
 
 ## 3.5 Checking & Treating Outliers
 
@@ -118,7 +131,9 @@ cat("MSE" , mse, "\n")
 coef(regressor)
 confint(regressor)
 ```
+
 ## 4.3 Hypothesis test on coefficients of alpha value is setting as 0.05
+
 ```{r}
 #H0: Bi = 0, i =0,1,2,3,4 
 #Ha: Bi != 0
@@ -129,14 +144,14 @@ F_critical < F_statistic
 #Hence we reject H0, which means there are relationships between independent variables and dependent variables.
 ```
 
-## 4.3 Preparing X and Y vectors for lasso regression
+## 4.4 Preparing X and Y vectors for lasso regression
 
 ```{r}
 x_train <- model.matrix(training_set$Profit~., data = training_set)[, -1]
 y_train <- training_set$Profit
 ```
 
-## 4.4 Displaying how the coefficients vary with lambda
+## 4.5 Displaying how the coefficients vary with lambda
 
 ```{r}
 library(glmnet)
@@ -153,7 +168,7 @@ cat("Best Lambda: ", best_lambda, "\n")
 coef(lasso_cv_model)
 ```
 
-## 4.5 Performance on test data
+## 4.6 Performance on test data
 
 ```{r}
 library(Metrics)
