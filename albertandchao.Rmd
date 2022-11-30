@@ -18,17 +18,17 @@ library(dplyr)
 
 ## 2.1 Source and Collect Data
 
-The data is obatained from where?
+Our data is collected online based on existed numbers.
 
 ## 2.2 Load Data
 
 Importing the dataset
 ```{r}
-dataset = read.csv("~/IIT Semester One/Applied Statistics/Project final/50_Startups.csv")
+dataset = read.csv("50_Startups.csv")
 plot(dataset)
 ```
 
-# 3. Process and Clean Data
+# 3. Data preprocessing and Data cleaning
 
 ## 3.1 Explore missing value patterns
 ## 3.2 Check if there are NA values
@@ -44,6 +44,8 @@ gg_miss_var(dataset, show_pct = TRUE)
 We don't have missing values but we drop na values just to check
 
 # 3.3 Data parsing (Set dummy variables)
+
+We don't have dummy variables to set in our dataset
 
 ## 3.3.1 Encoding categorical data
 
@@ -116,6 +118,16 @@ cat("MSE" , mse, "\n")
 coef(regressor)
 confint(regressor)
 ```
+## 4.3 Hypothesis test on coefficients of alpha value is setting as 0.05
+```{r}
+#H0: Bi = 0, i =0,1,2,3,4 
+#Ha: Bi != 0
+#Reject Ha fs F0 > F(0.05,4,37)
+F_critical = qf(p=.05, df1=4, df=37, lower.tail=FALSE)
+F_statistic = 177.1
+F_critical < F_statistic
+#Hence we reject H0, which means there are relationships between independent variables and dependent variables.
+```
 
 ## 4.3 Preparing X and Y vectors for lasso regression
 
@@ -151,7 +163,7 @@ test_mse <- mse(test_set$Profit, lasso_pred)
 cat("Test MSE" , test_mse, "\n")
 ```
 
-The resulting model dhave coefficients for all predictor variables.All the coefficients for other predictors got smaller with the except Intercept. This was expected as lasso performs feature selection through shrinking irrelevant coefficients to 0
+The resulting model have coefficients for all predictor variables.All the coefficients for other predictors got smaller with the except Intercept. This was expected as lasso performs feature selection through shrinking irrelevant coefficients to 0
 
 # 5.0 Model Accuracy
 
